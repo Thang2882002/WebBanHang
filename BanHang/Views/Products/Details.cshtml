@@ -1,0 +1,376 @@
+﻿@model BanHang.Models.Product
+@{
+
+
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/single_responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+
+<style>
+    .btn_size {
+        /* Đặt kích thước mong muốn cho các nút */
+        width: 50px; /* Thay đổi kích thước theo nhu cầu */
+        height: 50px; /* Thay đổi kích thước theo nhu cầu */
+        /* Thêm các thuộc tính CSS khác nếu cần thiết */
+    }
+
+        .btn_size.selected {
+            background-color: #FE4C50; /* Màu xanh của bạn */
+            color: #fff; /* Màu chữ trắng */
+        }
+    /* Ẩn phần hình ảnh chọn size ban đầu */
+    .size_chart_hidden {
+        display: none;
+    }
+
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5); /* Màu đen với độ trong suốt 50% */
+        z-index: 999; /* Đảm bảo lớp phủ nằm trên tất cả các phần tử khác */
+        display: none; /* Mặc định ẩn lớp phủ */
+    }
+
+    /* CSS cho hình ảnh kích cỡ */
+    #size_chart {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1000; /* Đảm bảo hình ảnh kích cỡ nằm trên lớp phủ */
+        display: none; /* Mặc định ẩn hình ảnh kích cỡ */
+    }
+</style>
+@if (Model != null)
+{
+
+
+    <div class="container single_product_container">
+        <div class="row">
+            <div class="col">
+
+                <!-- Breadcrumbs -->
+
+                <div class="breadcrumbs d-flex flex-row align-items-center">
+                    <ul>
+                        <li><a href="/Home/Index">Trang Chủ</a></li>
+                        <li><a href="/danh-muc-san-pham/@Model.ProductCategory.Alias-@Model.ProductCategoryID"><i class="fa fa-angle-right" aria-hidden="true"></i>@Model.ProductCategory.Name</a></li>
+                        <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>@Model.Name</a></li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="row" style=" margin-top: -70px;">
+            <div class="col-lg-7">
+                @if (Model.ProductImages != null && Model.ProductImages.Any())
+                {
+                    <div class="single_product_pics">
+                        <div class="row">
+                            <div class="col-lg-3 thumbnails_col order-lg-1 order-2">
+                                <div class="single_product_thumbnails">
+                                    <ul>
+                                        @foreach (var item in Model.ProductImages)
+                                        {
+                                            if (item.IsDefault == true)
+                                            {
+                                                <li class="active"><img style="width: 137px; height: 137px; " src="@item.Image" alt="" data-image="@item.Image"></li>
+                                            }
+                                            else
+                                            {
+                                                <li><img style="width: 137px; height: 137px; " src="@item.Image" alt="" data-image="@item.Image"></li>
+                                            }
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-lg-9 image_col order-lg-2 order-1">
+                                <div class="single_product_image">
+                                    <div class="single_product_image_background" style="background-image:url(@Model.Image)"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+            <div class="col-lg-5">
+                <div class="product_details">
+                    <div class="product_details_title">
+                        <h2>@Model.Name</h2>
+                        <p>@Html.Raw(Model.Description)</p>
+                        @*<p>Lượt xem: <b>@Model.ViewCount</b></p>*@
+                        <!-- Thêm biểu tượng hoặc nút để người dùng có thể nhấp vào -->
+                        <!-- Thêm biểu tượng menu -->
+                        <!-- Biểu tượng menu -->
+                        <div class="show_size_chart_button" onclick="toggleSizeChart()" style="font-size: 16px;">
+                            <i class="fas fa-tshirt" style="color: #C9AE63;"><span style="color: #323232;">  Hướng dẫn chọn size</span></i>
+                        </div>
+
+                        <!-- Lớp phủ -->
+                        <div class="overlay" id="overlay" onclick="hideSizeChart()"></div>
+
+                        <!-- Hình ảnh kích cỡ -->
+                        <div id="size_chart">
+                            <img src="~/assets/img/bang-size-quan-ao.jpg" alt="Size Chart">
+                        </div>
+
+                        <div class="home-product-item-size_input">
+                            <input type="button" class="btn_size" name="size" value="S" onclick="addToCart(@Model.IDProduct, 'S')">
+                            <input type="button" class="btn_size" name="size" value="M" onclick="addToCart(@Model.IDProduct, 'M')">
+                            <input type="button" class="btn_size" name="size" value="L" onclick="addToCart(@Model.IDProduct, 'L')">
+                            <input type="button" class="btn_size" name="size" value="XL" onclick="addToCart(@Model.IDProduct, 'XL')">
+
+                        </div>
+
+
+
+                    </div>
+                    @if (Model.PriceSale > 0)
+                    {
+                        <div class="original_price">@BanHang.Common.Common.FormatNumber(Model.Price, 0)<span> VND</span></div>
+                        <div class="product_price">@BanHang.Common.Common.FormatNumber(Model.PriceSale, 0)<span> VND</span></div>
+                    }
+                    else
+                    {
+                        <div class="product_price">@BanHang.Common.Common.FormatNumber(Model.Price, 0)</div>
+                    }
+                    <ul class="star_rating">
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                        <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                    </ul>
+
+                    <div class="quantity d-flex flex-column flex-sm-row align-items-sm-center">
+                        <span>Số Lượng:</span>
+                        <div class="quantity_selector">
+                            <span class="minus"><i class="fa fa-minus" aria-hidden="true"></i></span>
+                            <span id="quantity_value">1</span>
+                            <span class="plus"><i class="fa fa-plus" aria-hidden="true"></i></span>
+                        </div>
+                        <div class="red_button add_to_cart_button"><a href="#" class="btnAddToCart" data-id="@Model.IDProduct">add to cart</a></div>
+                        <div class="product_favorite d-flex flex-column align-items-center justify-content-center"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="tabs_section_container" style="margin-bottom:-90px;">
+
+        <div class="container">
+            <div class="row">
+                <div class="col" style="margin-top: -50px;margin-bottom:-50px">
+                    <div class="tabs_container">
+                        <ul class="tabs d-flex flex-sm-row flex-column align-items-left align-items-md-center justify-content-center">
+                            <li class="tab active" data-active-tab="tab_1"><span>Giới Thiệu</span></li>
+                            @*<li class="tab" data-active-tab="tab_2"><span>Additional Information</span></li>*@
+                            <li class="tab" data-active-tab="tab_3"><span>Đánh Giá</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+
+                    <!-- Tab Description -->
+
+                    <div id="tab_1" class="tab_container active">
+                        <div class="row">
+                            @Html.Raw(Model.Detail)
+                        </div>
+                    </div>
+
+                    <!-- Tab Additional Info -->
+                    <!-- Tab Reviews -->
+
+                    <div id="tab_3" class="tab_container">
+                        <div class="row">
+
+                            <!-- User Reviews -->
+
+                            <div class="col-lg-6 reviews_col">
+                                <div class="tab_title reviews_title">
+                                    <h4>Reviews (2)</h4>
+                                </div>
+
+                                <!-- User Review -->
+
+                                <div class="user_review_container d-flex flex-column flex-sm-row">
+                                    <div class="user">
+                                        <div class="user_pic"></div>
+                                        <div class="user_rating">
+                                            <ul class="star_rating">
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="review">
+                                        <div class="review_date">27 Aug 2016</div>
+                                        <div class="user_name">Brandon William</div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </div>
+                                </div>
+
+                                <!-- User Review -->
+
+                                <div class="user_review_container d-flex flex-column flex-sm-row">
+                                    <div class="user">
+                                        <div class="user_pic"></div>
+                                        <div class="user_rating">
+                                            <ul class="star_rating">
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="review">
+                                        <div class="review_date">27 Aug 2016</div>
+                                        <div class="user_name">Brandon William</div>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Add Review -->
+
+                            <div class="col-lg-6 add_review_col">
+
+                                <div class="add_review">
+                                    <form id="review_form" action="post">
+                                        <div>
+                                            <h1>Add Review</h1>
+                                            <input id="review_name" class="form_input input_name" type="text" name="name" placeholder="Name*" required="required" data-error="Name is required.">
+                                            <input id="review_email" class="form_input input_email" type="email" name="email" placeholder="Email*" required="required" data-error="Valid email is required.">
+                                        </div>
+                                        <div>
+                                            <h1>Your Rating:</h1>
+                                            <ul class="user_star_rating">
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+                                            </ul>
+                                            <textarea id="review_message" class="input_review" name="message" placeholder="Your Review" rows="4" required data-error="Please, leave us a review."></textarea>
+                                        </div>
+                                        <div class="text-left text-sm-right">
+                                            <button id="review_submit" type="submit" class="red_button review_submit_btn trans_300" value="Submit">submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+}
+@section scripts{
+    <script src="~/Content/assets/js/single_custom.js"></script>
+    <script>
+        // Lấy tất cả các nút kích cỡ
+        var sizeButtons = document.querySelectorAll('.btn_size');
+
+        // Lặp qua từng nút và thêm sự kiện onclick
+        sizeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Loại bỏ lớp 'selected' từ tất cả các nút kích cỡ
+                sizeButtons.forEach(function (btn) {
+                    btn.classList.remove('selected');
+                });
+
+                // Thêm lớp 'selected' cho nút đang được click
+                this.classList.add('selected');
+            });
+        });
+
+
+    </script>
+    <script>
+        function toggleSizeChart() {
+            var overlay = document.getElementById("overlay");
+            var sizeChart = document.getElementById("size_chart");
+
+            // Hiển thị lớp phủ và hình ảnh kích cỡ
+            overlay.style.display = "block";
+            sizeChart.style.display = "block";
+
+        }
+
+        function hideSizeChart() {
+            var overlay = document.getElementById("overlay");
+            var sizeChart = document.getElementById("size_chart");
+
+            // Ẩn lớp phủ và hình ảnh kích cỡ
+            overlay.style.display = "none";
+            sizeChart.style.display = "none";
+        }
+    </script>
+    <script>
+        // Lấy tất cả các nút kích cỡ
+        var sizeButtons = document.querySelectorAll('.btn_size');
+
+        // Lặp qua từng nút và thêm sự kiện onclick
+        sizeButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                // Lấy giá trị của kích thước từ thuộc tính value của nút được click
+                var size = this.value;
+
+                // Gọi hàm addToCart và truyền giá trị kích thước
+                addToCart(size);
+
+                // Loại bỏ lớp 'selected' từ tất cả các nút kích cỡ
+                sizeButtons.forEach(function (btn) {
+                    btn.classList.remove('selected');
+                });
+
+                // Thêm lớp 'selected' cho nút đang được click
+                this.classList.add('selected');
+            });
+        });
+
+    </script>
+    <script>
+        function addToCart(productId, size) {
+
+            // Gửi request AJAX để thêm sản phẩm vào giỏ hàng
+            $.ajax({
+                type: "post",
+                url: "/shoppingcart/addtocart", // đường dẫn đến phương thức xử lý thêm sản phẩm vào giỏ hàng
+                data: { id: productId, quantity: parseInt($('#quantity_value').text()) - 1, size: size }, // dữ liệu gửi lên server, bao gồm id sản phẩm, số lượng và kích thước
+                success: function (response) {
+                    // xử lý kết quả trả về từ server nếu cần
+                },
+                error: function (xhr, status, error) {
+                    // xử lý lỗi nếu có
+                    console.log("error:", error);
+                }
+            });
+        }
+    </script>
+
+
+}

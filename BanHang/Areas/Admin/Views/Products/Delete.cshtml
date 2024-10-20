@@ -1,0 +1,133 @@
+﻿@model BanHang.Models.Product
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/products" class="nav-link">Quản lý Sản Phẩm</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Xóa Sản Phẩm</a>
+        </li>
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Xóa Sản Phẩm</h3>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4 style="margin-bottom: 20px;" class="card-title">Xóa sản phẩm</h4>
+        <hr style="margin-top: 20px;" />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 20%">Tiêu đề</th>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <th>SeoTitle</th>
+                        <td>@Html.DisplayFor(model => model.SeoTitle)</td>
+                    </tr>
+                    <tr>
+                        <th>Mô Tả</th>
+                        <td>@Html.DisplayFor(model => model.Description)</td>
+                    </tr>
+
+                    <tr>
+                        <th>Chi Tiết</th>
+                        <td>@Html.DisplayFor(model => model.Detail)</td>
+                    </tr>
+                    <tr>
+                        <th>Hình Ảnh</th>
+                        <td>@Html.DisplayFor(model => model.Image)</td>
+                    </tr>
+                    <tr>
+                        <th>Người tạo</th>
+                        <td>@Html.DisplayFor(model => model.CreatedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày tạo</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Người sửa đổi</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày sửa đổi</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Alias</th>
+                        <td>@Html.DisplayFor(model => model.Alias)</td>
+                    </tr>
+                    <tr>
+                        <th>Trạng Thái</th>
+                        <td>
+                            @{
+                                string status = Model.IsActive.HasValue ? (Model.IsActive.Value ? "Hiển Thị" : "Không Hiển Thị") : "Không xác định";
+                            }
+                            @status
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Hiển Thị Trang Chủ</th>
+                        <td>
+                            @{
+                                string statuso = Model.IsHome.HasValue ? (Model.IsHome.Value ? "Hiển Thị" : "Không Hiển Thị") : "Không xác định";
+                            }
+                            @statuso
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Hiển Thị Sale</th>
+                        <td>
+                            @{
+                                string statuson = Model.IsSale.HasValue ? (Model.IsSale.Value ? "Hiển Thị" : "Không Hiển Thị") : "Không xác định";
+                            }
+                            @statuson
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <th>Hiển Thị Hot</th>
+                        <td>
+                            @{
+                                string statusonn = Model.IsHot.HasValue ? (Model.IsHot.Value ? "Hiển Thị" : "Không Hiển Thị") : "Không xác định";
+                            }
+                            @statusonn
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-info" })
+        </div>
+    }
+</div>
+

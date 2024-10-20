@@ -1,0 +1,150 @@
+﻿@model IPagedList<BanHang.Models.ProductImage>
+@using PagedList.Mvc;
+@using PagedList;
+
+@{
+    ViewBag.Title = "Index";
+}
+
+
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/productimages" class="nav-link">Quản lý Hình Ảnh Sản Phẩm</a>
+        </li>
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Danh sách Hình Ảnh</h3>
+        <div class="card-tools">
+            <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
+            <a href="#" class="btn btn-danger" id="BtnDeleteAll"> <i class="fas fa-trash-alt"></i> Xóa</a>
+        </div>
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-bordered table-hover text-center">
+        <thead class="thead-light">
+            <tr>
+                <th style="width: 5%;">#</th>
+                <th style="width: 20%;">Tên sản phẩm</th>
+                <th style="width: 20%;">Hình Ảnh</th>
+                <th style="width: 20%;">Trạng Thái</th>
+                
+                <th style="width: 35%;">Chức Năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="trow_@item.IDProduct">
+                    <td><input type="checkbox" class="cbkItem" value="@item.ProductImageID" /></td>
+                    <td>@Html.DisplayFor(modelItem => item.Product.Name)</td>
+                    <td><img src="@item.Image" alt="Image" style="max-width: 100px; max-height: 100px;" /></td>
+                    <td style="text-align:center">
+                        <a href="#" class="btnToggleStatus" data-id="@item.ProductImageID">
+                            @if (item.IsDefault == true)
+                            {
+                                <i class="fas fa-check text-success cbkItemIcon"></i>
+                            }
+                            else
+                            {
+                                <i class="fas fa-times text-danger cbkItemIcon"></i>
+                            }
+                        </a>
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.ProductImageID })" class="btn btn-primary"><i class="fas fa-edit"></i> </a>
+                        <a href="@Url.Action("Details", new { id = item.ProductImageID })" class="btn btn-info"><i class="fas fa-info-circle"></i> </a>
+                        <a href="@Url.Action("Delete", new { id = item.ProductImageID })" class="btn btn-danger" ><i class="fas fa-trash-alt"></i> </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $('.btnToggleStatus').on('click', function () {
+                var itemId = $(this).data("id");
+                toggleStatus(itemId, $(this));
+            });
+
+            function toggleStatus(itemId, element) {
+                $.ajax({
+                    url: '/admin/ProductImages/IsDefault',
+                    type: 'POST',
+                    data: { id: itemId },
+                    success: function (result) {
+                        if (result.success) {
+                            if (result.IsDefault) {
+                                element.html('<i class="fa fa-check text-success cbkItemIcon"></i>');
+                            } else {
+                                element.html('<i class="fas fa-times text-danger cbkItemIcon"></i>');
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script>
+        $(document).ready(function () {
+            $('#SelectAll').on('click', function () {
+                $('.cbkItem').prop('checked', $(this).prop('checked'));
+            });
+
+            $('#BtnDeleteAll').on('click', function () {
+                var selectedItems = $('.cbkItem:checked').map(function () {
+                    return $(this).val();
+                }).get();
+
+                if (selectedItems.length > 0) {
+                    if (confirm('Bạn có muốn xóa những hình ảnh này không?')) {
+                        $.ajax({
+                            url: '/admin/ProductImages/DeleteSelected',
+                            type: 'POST',
+                            data: { ids: selectedItems },
+                            success: function (response) {
+                                if (response.success) {
+                                    location.reload();
+                                } else {
+                                    alert('Đã xảy ra lỗi khi xóa dữ liệu!');
+                                }
+                            },
+                            error: function () {
+                                alert('Đã xảy ra lỗi khi gửi yêu cầu xóa dữ liệu!');
+                            }
+                        });
+                    }
+                } else {
+                    alert('Vui lòng chọn ít nhất một mục để xóa!');
+                }
+            });
+        });
+    </script>
+
+
+}

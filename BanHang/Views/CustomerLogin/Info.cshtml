@@ -1,0 +1,60 @@
+﻿@model BanHang.Models.User
+
+@{
+    ViewBag.Title = "Thông tin khách hàng";
+}
+
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div style="margin-top:180px;"></div>
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header text-center">
+            <h3 class="card-title" style="font-size: 30px">Thông tin của tôi</h3>
+        </div>
+    </div>
+
+    <div class="card mt-3">
+        <div class="card-body">
+            <hr />
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <th style="width: 20%">Tên đăng nhập:</th>
+                            <td>@Model.UserName</td>
+                        </tr>
+                        <tr>
+                            <th>Họ Tên Khách Hàng</th>
+                            <td>@Model.Name</td>
+                        </tr>
+                        <tr>
+                            <th>Điện Thoại</th>
+                            <td>@Model.Phone</td>
+                        </tr>
+                        <tr>
+                            <th>Địa Chỉ</th>
+                            <td>@Model.Address</td>
+                        </tr>
+                        <tr>
+                            <th>Email</th>
+                            <td>@Model.Email</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-3">
+        <div class="row">
+            <div class="col-md-6">
+                @Html.ActionLink("Chỉnh sửa", "Edit", "Login", new { @class = "btn btn-primary btn-block", style = "width:100px;float:right;" })
+            </div>
+            <div class="col-md-6">
+                @Html.ActionLink("Quay lại", "Index", "Home", new { @class = "btn btn-secondary btn-block", style = "width: 100px;" })
+            </div>
+        </div>
+    </div>
+</div>

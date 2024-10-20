@@ -1,0 +1,115 @@
+﻿@model IPagedList<BanHang.Models.Order>
+@using PagedList.Mvc;
+@using PagedList;
+@using BanHang.Areas.Admin.Controllers
+
+@{
+    ViewBag.Title = "Index";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/orders" class="nav-link">Quản lý Đơn Hàng</a>
+        </li>
+    </ul>
+}
+
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Danh sách Đơn Hàng</h3>
+        <div class="card-tools">
+            <a href="@Url.Action("Create")" class="btn btn-primary"><i class="fas fa-plus"></i> Thêm mới</a>
+            @*<a href="#" class="btn btn-danger" id="BtnDeleteAll" onclick="location.href='@Url.Action("ExportToExcel", "Orders", new { })'"><i class="fas fa-trash-alt"></i> Xuất Excel</a>*@
+        </div>
+    </div>
+</div>
+
+<div class="row" style="padding: 10px; margin-top: -15px;">
+    <div class="col-6">
+        @using (Html.BeginForm("Index", "Orders", FormMethod.Get, new { }))
+        {
+            <div class="input-group">
+                @Html.TextBox("SearchTitle", null, new { @class = "form-control", placeholder = "Tìm kiếm theo tiêu đề..." })
+                <div class="input-group-append">
+                    <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<div class="table-responsive">
+    <table class="table table-hover table-bordered text-center">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col" style="width: 10%">Mã Đơn Hàng</th>
+                <th scope="col" style="width: 10%">Khách Hàng</th>
+                <th scope="col" style="width: 10%">Số Điện Thoại</th>
+                <th scope="col" style="width: 10%">Địa Chỉ</th>
+                <th scope="col" style="width: 5%">Tổng Tiền</th>
+                <th scope="col" style="width: 10%">Thanh Toán</th>
+                <th scope="col" style="width: 5%">Ngày Tạo</th>
+                <th scope="col" style="width: 10%">Đơn vị vận chuyển</th>
+                <th scope="col" style="width: 10%">Email</th>
+                <th scope="col" style="width: 20%">Chức Năng</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.OrderCode)</td>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                    <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                    <td>
+                        @if (item.StatusPayment == true)
+                        {
+                            <span class="text-success">Đã thanh toán</span>
+                        }
+                        else
+                        {
+                            <span class="text-danger">Chưa thanh toán</span>
+                        }
+                    </td>
+
+                    <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+
+                    <td>@Html.DisplayFor(modelItem => item.Shipping)</td>
+
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>
+                        <a href="@Url.Action("GenerateAndDownloadInvoiceWithQR", "Orders", new { orderId = item.OrderID })" class="btn btn-primary" title="Xuất Hóa Đơn"><i class="fas fa-file-invoice"></i></a>
+                        <div class="btn-group" role="group">
+                            <button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" title="Chức năng">
+                                <i class="fas fa-cogs"></i>
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="@Url.Action("Edit", new { id = item.OrderID })" title="Sửa"><i class="fas fa-edit"></i> Cập Nhật</a>
+                                <a class="dropdown-item" href="@Url.Action("Details", new { id = item.OrderID })" title="Chi Tiết"><i class="fas fa-info-circle"></i> Chi Tiết</a>
+                                <a class="dropdown-item" href="@Url.Action("Delete", new { id = item.OrderID })" title="Xóa"><i class="fas fa-trash-alt"></i> Xóa</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            @Html.PagedListPager(Model, page => Url.Action("Index", new { page, searchTitle = Request.QueryString["searchTitle"] }))
+        </div>
+    </div>
+</div>

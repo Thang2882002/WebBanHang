@@ -1,0 +1,184 @@
+﻿@model BanHang.Models.Contact
+@{
+    ViewBag.Title = "Index";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/contact_styles.css">
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/contact_responsive.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!--<div class="container contact_container">
+    <div class="row">
+        <div class="col">-->
+<!-- Breadcrumbs -->
+<!--<div class="breadcrumbs d-flex flex-row align-items-center">
+            <ul>
+                <li><a href="index.html">Liên hệ</a></li>
+                <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Contact</a></li>
+            </ul>
+        </div>
+
+    </div>
+</div>-->
+<!-- Map Container -->
+@*<<div class="row">
+
+            <div class="col">
+                <div id="google_map">
+                    <div class="map_container">
+
+                        <div id="map">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3724.923577423157!2d105.86067407955305!3d20.995700330740675!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ac05404c1b1d%3A0xd865d467337f19d0!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBLaW5oIFThur8gS-G7uSBUaHXhuq10IEPDtG5nIE5naGnhu4dw!5e0!3m2!1svi!2s!4v1712977533181!5m2!1svi!2s" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>*@
+<div class="container contact_container">
+    <div class="row">
+        <div class="col">
+
+            <!-- Breadcrumbs -->
+
+            <div class="breadcrumbs d-flex flex-row align-items-center">
+                <ul>
+                    <li><a href="index.html">Trang Chủ</a></li>
+                    <li class="active"><a href="#"><i class="fa fa-angle-right" aria-hidden="true"></i>Liên Hệ</a></li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <!-- Contact Us -->
+
+    <div class="row">
+
+        <div class="col-lg-6 contact_col">
+            <div class="contact_contents">
+                <h1>Thông tin về chúng tôi</h1>
+                <div>
+                    <p>Họ và tên: Đoàn Minh Thắng</p>
+                    <p>Email:doanminhthang2808@gmail.com</p>
+                </div>
+                <div>
+                    <p>Họ và tên: Lê Thị Quỳnh</p>
+                    <p>Email:lethiquynh2010@gmail.com</p>
+                </div>
+                <div>
+                    <p>Địa chỉ: 456 P. Minh Khai, Vĩnh Tuy, Hai Bà Trưng, Hà Nội,</p>
+                    <p>Thời gian mở cửa: 8h - 12h</p>
+                </div>
+            </div>
+
+            <!-- Follow Us -->
+
+            <div class="follow_us_contents">
+                <h1>Follow Us</h1>
+                <ul class="social d-flex flex-row">
+                    <li><a href="#" style="background-color: #3a61c9"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#" style="background-color: #41a1f6"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#" style="background-color: #fb4343"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                    <li><a href="#" style="background-color: #8f6247"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="col-lg-6 get_in_touch_col">
+            <div class="get_in_touch_contents">
+                <h1>Liên hệ với chúng tôi</h1>
+                @if (ViewBag.SuccessMessage != null)
+                {
+                    <div class="alert alert-success" role="alert">
+                        @ViewBag.SuccessMessage
+                    </div>
+                }
+
+                @using (Html.BeginForm("Index", "Contact", FormMethod.Post, new { @class = "contact-form" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-group">
+                        
+                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Họ và Tên", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control", placeholder = "Email", required = "required", type = "email" })
+                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control", placeholder = "Số Điện Thoại", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                    </div>
+
+                    <div class="form-group">
+                        
+                        @Html.TextAreaFor(model => model.Message, new { @class = "form-control", placeholder = "Tin Nhắn", rows = "3", required = "required" })
+                        @Html.ValidationMessageFor(model => model.Message, "", new { @class = "text-danger" })
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Gửi tin nhắn</button>
+                }
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<!-- Bootstrap Popup -->
+<div class="modal fade" id="contactResultModal" tabindex="-1" role="dialog" aria-labelledby="contactResultModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactResultModalLabel">Thông báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <span id="contactResultMessage"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+    $(document).ready(function () {
+      $('form').submit(function (event) {
+        // Ngăn chặn gửi form mặc định
+        event.preventDefault();
+
+        // Thực hiện AJAX request để gửi dữ liệu liên hệ
+        $.ajax({
+          type: 'POST',
+          url: '@Url.Action("Index", "Contact")', // Điều chỉnh đường dẫn dựa trên routing của bạn
+          data: $(this).serialize(), // Gửi dữ liệu từ form
+          success: function (response) {
+            // Hiển thị modal thành công và ẩn đi sau 5 giây
+            $('#contactResultMessage').text('Bạn đã liên hệ thành công!');
+            $('#contactResultModal').modal('show');
+            setTimeout(function () {
+              $('#contactResultModal').modal('hide');
+            }, 5000);
+          },
+          error: function (xhr, status, error) {
+            // Hiển thị modal thất bại và ẩn đi sau 5 giây
+            $('#contactResultMessage').text('Bạn đã liên hệ thất bại!');
+            $('#contactResultModal').modal('show');
+            setTimeout(function () {
+              $('#contactResultModal').modal('hide');
+            }, 5000);
+          }
+        });
+      });
+    });
+    </script>
+    <script src="~/Content/assets/js/contact_custom.js"></script>
+}

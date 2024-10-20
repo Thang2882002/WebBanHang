@@ -1,0 +1,88 @@
+﻿@model BanHang.Models.User
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/Categories" class="nav-link">Quản lý Tài Khoản</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Chi Tiết Tài Khoản</a>
+        </li>
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Chi Tiết Tài Khoản</h3>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h4 style="margin-bottom: 20px;" class="card-title">Chi tiết tin tức</h4>
+        <hr style="margin-top: 20px;" />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 20%">Role</th>
+                        <td>@Html.DisplayFor(model => model.Role.Role1)</td>
+                    </tr>
+                    <tr>
+                        <th>UserName</th>
+                        <td>@Html.DisplayFor(model => model.UserName)</td>
+                    </tr>
+                    <tr>
+                        <th>MậT Khẩu</th>
+                        <td>@Html.DisplayFor(model => model.Password)</td>
+                    </tr>
+                    <tr>
+                        <th>Tên Khách Hàng</th>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại</th>
+                        <td>@Html.DisplayFor(model => model.Phone)</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ</th>
+                        <td>@Html.DisplayFor(model => model.Address)</td>
+                    </tr>
+                    <tr>
+                        <th>Email</th>
+                        <td>@Html.DisplayFor(model => model.Email)</td>
+                    </tr>
+                    <
+                    <tr>
+                        <th>Trạng Thái</th>
+                        <td>
+                            @{
+                                string status = Model.Status.HasValue ? (Model.Status.Value ? "Hiển Thị" : "Không Hiển Thị") : "Không xác định";
+                            }
+                            @status
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.UserID }, new { @class = "btn btn-primary" })
+    |
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-info" })
+
+</p>

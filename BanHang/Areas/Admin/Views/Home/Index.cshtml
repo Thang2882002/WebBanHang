@@ -1,0 +1,254 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<style>
+    #alert-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .alert {
+        position: relative;
+        padding: 0.75rem 1.25rem;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        background: linear-gradient(to right, rgb(0, 176, 155), rgb(150, 201, 61));
+        color: #fff;
+        border-color: #c3e6cb;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+
+    .alert-hide {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+</style>
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Tổng Quan</h3>
+
+    </div>
+</div>
+@if (TempData["dangnhapthanhcong"] != null && (bool)TempData["dangnhapthanhcong"])
+{
+    <div id="alert-container"></div>
+    <script>
+        function showNotification(message) {
+            var alertElement = document.createElement('div');
+            alertElement.classList.add('alert', 'alert-success');
+            alertElement.textContent = message;
+            document.getElementById('alert-container').appendChild(alertElement);
+
+            setTimeout(function () {
+                alertElement.classList.add('alert-hide');
+                setTimeout(function () {
+                    alertElement.remove();
+                }, 500);
+            }, 5000);
+        }
+
+        showNotification('Đăng nhâp thành công!');
+    </script>
+}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalRevenue.ToString("N0")</h3>
+
+                        <p> Tổng Doanh Thu</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalQuantitySold</h3>
+
+                        <p>Tổng số lượng sản phẩm bán ra</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-stats-bars"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalProfit.ToString("N0")</h3>
+
+                        <p>Tổng lợi nhuận</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-6">
+                <!-- small box -->
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>@ViewBag.TotalQuantityInStock</h3>
+
+                        <p>Tổng sản phẩm trong kho</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-pie-graph"></i>
+                    </div>
+                    <a href="#" class="small-box-footer">Xem thêm <i class="fas fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <div class="card">
+            <div class="card-header" style="text-align:center">
+                <h3 class="card-title" style="font-size:30px">Thống kê đơn hàng</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="startDate">Từ ngày:</label>
+                            <div class="input-group date" id="startDate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#startDate" />
+                                <div class="input-group-append" data-target="#startDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="endDate">Đến ngày:</label>
+                            <div class="input-group date" id="endDate" data-target-input="nearest">
+                                <input type="text" class="form-control datetimepicker-input" data-target="#endDate" />
+                                <div class="input-group-append" data-target="#endDate" data-toggle="datetimepicker">
+                                    <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <button type="button" class="btn btn-primary" onclick="searchOrders()">
+                            <i class="fas fa-search"></i> Tìm kiếm
+                        </button>
+                        <button type="button" class="btn btn-success" id="exportExcel">
+                            <i class="fas fa-file-excel"></i> Xuất Excel
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="orderListContainer">
+            <!-- Đây là nơi để hiển thị danh sách đơn hàng sau khi tìm kiếm -->
+        </div>
+
+        <!-- /.row -->
+        <!-- Main row -->
+        <!-- /.row (main row) -->
+    </div><!-- /.container-fluid -->
+</section>
+<!-- Modal cảnh báo -->
+<div class="modal fade" id="warningModal" tabindex="-1" role="dialog" aria-labelledby="warningModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="warningModalLabel">Cảnh báo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Vui lòng chọn cả ngày bắt đầu và ngày kết thúc trước khi tìm kiếm.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script type="text/javascript">
+    $(function () {
+        $('#startDate').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: false
+        });
+        $('#endDate').datetimepicker({
+            format: 'YYYY-MM-DD',
+            useCurrent: false
+        });
+        // Xử lý sự kiện khi nhấp vào nút "Xuất Excel"
+        $('#exportExcel').click(function () {
+            var startDate = $('#startDate').find('input').val();
+            var endDate = $('#endDate').find('input').val();
+
+            // Chuyển hướng đến action xuất Excel với khoảng thời gian đã chọn
+            window.location.href = '@Url.Action("ExportToExcel", "Home")?startDate=' + startDate + '&endDate=' + endDate;
+        });
+    });
+
+    function searchOrders() {
+        var startDate = $('#startDate').find('input').val();
+        var endDate = $('#endDate').find('input').val();
+
+        // Kiểm tra xem ngày bắt đầu và ngày kết thúc có được chọn không
+        if (!startDate || !endDate) {
+            // Hiển thị cảnh báo
+            $('#warningModal').modal('show');
+            // Dừng hàm
+            return;
+        }
+
+        $.ajax({
+            url: '@Url.Action("SearchOrders", "Home")',
+            type: 'POST',
+            data: { startDate: startDate, endDate: endDate },
+            success: function (response) {
+                $('#orderListContainer').html(response);
+            },
+            error: function () {
+                alert('Đã xảy ra lỗi khi tìm kiếm đơn hàng.');
+            }
+        });
+    }
+    </script>
+}

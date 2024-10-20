@@ -1,0 +1,65 @@
+﻿@model List<BanHang.Models.Order>
+@{
+    ViewBag.Title = "My Orders";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div style="margin-top:180px;"></div>
+<style>
+    .container-menu {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .tabs-menu {
+        display: flex;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .tab-menu {
+        flex: 1;
+        text-align: center;
+        padding: 10px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .tab-menu:hover {
+            background-color: #f5f5f5;
+        }
+
+    .active-menu {
+        background-color: #fff;
+        border-bottom: 2px solid #007bff;
+    }
+
+    .tab-menu a {
+        text-decoration: none;
+        color: inherit;
+    }
+</style>
+<div class="container-menu">
+    <h1 style="font-size: 24px; margin-bottom: 20px; text-align:center;">Đơn hàng của tôi</h1>
+    <div class="tabs-menu">
+        <div class="tab-menu "><a href="@Url.Action("MyOrders", "Order")">Tất cả đơn</a></div>
+        <div class="tab-menu"><a href="@Url.Action("PendingOrders", "Order")">Chờ thanh toán</a></div>
+        <div class="tab-menu"><a href="@Url.Action("DeliveryStatus", "Order")">Đang vận chuyển</a></div>
+        <div class="tab-menu "><a href="@Url.Action("ReceiveOrders", "Order")">Đã nhận</a></div>
+        <div class="tab-menu active-menu "><a href="@Url.Action("CancelledOrders", "Order")">Đã hủy</a></div>
+    </div>
+    <!-- Additional content for each tab can be added here -->
+</div>
+<div class="row">
+    <
+    <div class="col-12">
+        @foreach (var order in Model)
+        {
+            @Html.Action("Partial_SanPham", "Order", new { id = order.OrderID })
+        }
+    </div>
+</div>

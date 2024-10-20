@@ -1,0 +1,82 @@
+﻿@model BanHang.Models.ProductCategory
+
+@{
+    ViewBag.Title = "Details";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/Categories" class="nav-link">Danh Mục Sản Phẩm</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Chi Tiết Danh Mục Sản Phẩm</a>
+        </li>
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Chi Tiết Danh Mục Sản Phẩm</h3>
+
+    </div>
+</div>
+
+
+<div class="card">
+    <div class="card-body">
+        <h4 style="margin-bottom: 20px;" class="card-title">Chi tiết danh mục</h4>
+        <hr style="margin-top: 20px;" />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 20%">Tiêu đề</th>
+                        <td>@Html.DisplayFor(model => model.Name)</td>
+                    </tr>
+                    <tr>
+                        <th>Mô tả</th>
+                        <td>@Html.DisplayFor(model => model.SeoTitle)</td>
+                    </tr>
+                    <tr>
+                        <th>Hình Ảnh</th>
+                        <td>@Html.DisplayFor(model => model.Image)</td>
+                    </tr>
+                    <tr>
+                        <th>Người tạo</th>
+                        <td>@Html.DisplayFor(model => model.CreatedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày tạo</th>
+                        <td>@Html.DisplayFor(model => model.CreatedDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Người sửa đổi</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedBy)</td>
+                    </tr>
+                    <tr>
+                        <th>Ngày sửa đổi</th>
+                        <td>@Html.DisplayFor(model => model.ModifiedDate)</td>
+                    </tr>
+                    <tr>
+                        <th>Alias</th>
+                        <td>@Html.DisplayFor(model => model.Alias)</td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = Model.ProductCategoryID }, new { @class = "btn btn-primary" })
+    |
+    @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-info" })
+
+</p>

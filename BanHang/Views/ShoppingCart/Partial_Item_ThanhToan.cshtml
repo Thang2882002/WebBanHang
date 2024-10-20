@@ -1,0 +1,46 @@
+﻿@model IEnumerable<BanHang.Models.ShoppingCartItem>
+@using BanHang.Common
+
+@if (Model != null && Model.Any())
+{
+    <h3>GIỎ HÀNG <span style="float:right;position:relative"><small>@Model.Count()</small></span></h3>
+    var i = 0;
+    var tongtien = decimal.Zero;
+    <div style="border:1px solid #808080;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    i++;
+                    tongtien += item.TotalPrice;
+                    <tr>
+                        <td>@i</td>
+                        <td>@item.ProductName</td>
+                        <td>@Common.FormatNumber(item.Price, 0)</td>
+                        <td>@item.Quantity</td>
+                        <td>@Common.FormatNumber(item.TotalPrice, 0)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="4">Tổng tiền</td>
+                    <td>@Common.FormatNumber(tongtien, 0)</td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+}
+else
+{
+    <p>Không có sản phẩm trong giỏ hàng.</p>
+}

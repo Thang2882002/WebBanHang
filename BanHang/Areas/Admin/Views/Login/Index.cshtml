@@ -1,0 +1,89 @@
+﻿@model BanHang.Models.Login
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Form</title>
+    <!-- Link CSS của Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Thêm CSS tùy chỉnh nếu cần thiết */
+        body {
+            /* Thiết lập hình nền bằng hình ảnh */
+            background-image: url('https://kenh14cdn.com/thumb_w/660/203336854389633024/2024/3/27/photo-13-17115245034991608256495.jpg');
+            /* Chỉ định cách thức hiển thị hình nền */
+            background-size: cover;
+            background-position: center;
+            /* Thiết lập một chiều cao tối thiểu */
+            min-height: 100vh;
+            /* Thêm các thuộc tính CSS khác nếu cần thiết */
+        }
+
+        .login-container {
+            margin-top: 100px;
+        }
+        
+    </style>
+</head>
+
+<body>
+
+    <div class="container login-container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="text-center">Đăng Nhập</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Form đăng nhập -->
+                        @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Username, new { @class = "control-label" })
+                                @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Nhập tên đăng nhập", required = "required" })
+                                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(m => m.Password, new { @class = "control-label" })
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Nhập mật khẩu", required = "required", id = "passwordInput" })
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                <input type="checkbox" id="showPassword" style="margin-top: 15px;"> <label for="showPassword">Hiển thị mật khẩu</label>
+                            </div>
+
+
+                            <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link JS của Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#showPassword').change(function () {
+                var passwordInput = $('#passwordInput');
+                var passwordFieldType = passwordInput.attr('type');
+                if (passwordFieldType === 'password') {
+                    passwordInput.attr('type', 'text');
+                } else {
+                    passwordInput.attr('type', 'password');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
+

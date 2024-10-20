@@ -1,0 +1,60 @@
+﻿@model BanHang.Models.Role
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/roles" class="nav-link">Quản lý phân quyền</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="#" class="nav-link">Xóa Phân Quyền</a>
+        </li>
+    </ul>
+}
+<div class="card">
+    <div class="card-header" style="text-align:center">
+        <h3 class="card-title" style="font-size:30px">Xóa Phân Quyền</h3>
+
+    </div>
+</div>
+<div class="card">
+    <div class="card-body">
+        <h4 style="margin-bottom: 20px;" class="card-title">Chi tiết tin tức</h4>
+        <hr style="margin-top: 20px;" />
+        <div class="table-responsive">
+            <table class="table table-bordered">
+                <tbody>
+                    <tr>
+                        <th style="width: 20%">ID Role</th>
+                        <td>@Html.DisplayFor(model => model.IDRole)</td>
+                    </tr>
+                    <tr>
+                        <th>Quyền</th>
+                        <td>@Html.DisplayFor(model => model.Role1)</td>
+                    </tr>
+
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            @Html.ActionLink("Quay lại danh sách", "Index", null, new { @class = "btn btn-info" })
+        </div>
+    }
+</div>

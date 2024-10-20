@@ -1,0 +1,99 @@
+﻿@model BanHang.Models.OrderViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<div class="container " style="margin-top:180px;">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>Đặt hàng</h2>
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox" id="chkRemember" /> Chọn lại thông tin đã đăng nhập
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.CustomerName)
+                    @Html.TextBoxFor(model => model.CustomerName, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Phone)
+                    @Html.TextBoxFor(model => model.Phone, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Phone, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Address)
+                    @Html.TextBoxFor(model => model.Address, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Address, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Email)
+                    @Html.TextBoxFor(model => model.Email, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TypePayment)
+                    @Html.DropDownListFor(model => model.TypePayment, new SelectList(new[]
+                        {
+                            new SelectListItem { Value = "1", Text = "Thanh toán khi nhận hàng" },
+                            new SelectListItem { Value = "2", Text = "Thanh toán qua VNPAY" }
+                        }, "Value", "Text"), "Chọn phương thức thanh toán", new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.TypePayment, "", new { @class = "text-danger" })
+                </div>
+
+                <button type="submit" class="btn btn-primary">Đặt hàng</button>
+            }
+        </div>
+        <div class="col-md-4">
+            @Html.Action("Partial_Item_ThanhToan", "ShoppingCart")
+
+        </div>
+    </div>
+</div>
+
+
+    @section scripts{
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#chkRemember').change(function () {
+                    if ($(this).is(':checked')) {
+                        // Gửi yêu cầu AJAX đến máy chủ để nhận thông tin khách hàng
+                        $.ajax({
+                            url: '/CustomerLogin/GetCustomerInfo',
+                            type: 'GET',
+                            dataType: 'json',
+                            success: function (data) {
+                                // Điền thông tin nhận được vào các textbox
+                                $('#CustomerName').val(data.Name);
+                                $('#Phone').val(data.Phone);
+                                $('#Address').val(data.Address);
+                                $('#Email').val(data.Email);
+                            },
+                            error: function () {
+                                alert('Đã xảy ra lỗi khi lấy thông tin khách hàng.');
+                            }
+                        });
+                    } else {
+                        // Xóa thông tin từ các textbox
+                        $('#CustomerName').val('');
+                        $('#Phone').val('');
+                        $('#Address').val('');
+                        $('#Email').val('');
+                    }
+                });
+            });
+        </script>
+    }
+

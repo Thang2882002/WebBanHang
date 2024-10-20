@@ -1,0 +1,325 @@
+﻿@model IEnumerable<BanHang.Models.Product>
+@{
+    ViewBag.Title = "Shop Online";
+    ViewBag.SeoDescription = "Shop Online";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+<!-- Slider -->
+<style>
+    .navbar_menu li a {
+        position: relative; /* Thiết lập vị trí tương đối để tạo vùng chứa cho dash */
+        color: #000; /* Màu chữ mặc định */
+        text-decoration: none; /* Loại bỏ gạch chân mặc định */
+    }
+
+        .navbar_menu li a:hover {
+            color: #FF0000; /* Đổi màu chữ thành đỏ khi hover */
+        }
+
+        .navbar_menu li a::after {
+            content: ''; /* Nội dung rỗng */
+            position: absolute; /* Vị trí tuyệt đối */
+            bottom: -2px; /* Khoảng cách dash so với chữ */
+            left: 0; /* Cách lề trái */
+            width: 100%; /* Chiều rộng là 100% của menu item */
+            height: 2px; /* Độ dày của dash */
+            background-color: #000; /* Màu của dash */
+            transform: scaleX(0); /* Đặt chiều dài của dash thành 0 ban đầu */
+            transition: transform 0.3s ease; /* Tạo hiệu ứng chuyển đổi mềm mại */
+        }
+
+        .navbar_menu li a:hover::after {
+            transform: scaleX(1); /* Kéo dài dash khi hover */
+        }
+
+    .image-container img {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .form-container {
+        text-align: center;
+    }
+
+    .social-icons {
+        margin-top: 20px;
+    }
+
+        .social-icons a {
+            color: #333;
+            font-size: 24px;
+            margin: 0 10px;
+        }
+
+    .btn1 {
+        background-color: #333;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 20px;
+    }
+    /* Custom CSS for horizontal alignment */
+    .container-horizontal {
+        display: flex;
+        flex-direction: row;
+    }
+
+        .container-horizontal .image-container,
+        .container-horizontal .form-container {
+            flex: 1;
+            padding: 10px;
+        }
+
+    /* Thông báo */
+    #alert-container {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        z-index: 9999;
+    }
+
+    .alert {
+        position: relative;
+        padding: 15px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        background: linear-gradient(to right, #00b09b, #96c93d); /* Gradient màu nền */
+        color: #fff;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Đổ bóng */
+        transition: opacity 0.5s ease-in-out;
+    }
+
+    .alert-hide {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+
+</style>
+
+<div class="main_slider" style="background-image: url(/Content/assets/images/slider-07.png ) ">
+    <div class="container fill_height">
+        <div class="row align-items-center fill_height">
+            <div class="col">
+                <div class="main_slider_content">
+                    <h6>Spring / Summer Collection 2024</h6>
+                    <h1>Get up to 30% Off New Arrivals</h1>
+                    <div class="red_button shop_now_button"><a href="@Url.Action("Index", "Products")">Mua Ngay</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if (TempData["dangnhapthanhcong"] != null && (bool)TempData["dangnhapthanhcong"])
+{
+    <div id="alert-container"></div>
+    <script>
+        function showNotification(message) {
+            var alertElement = document.createElement('div');
+            alertElement.classList.add('alert', 'alert-success');
+            alertElement.textContent = message;
+            document.getElementById('alert-container').appendChild(alertElement);
+
+            setTimeout(function () {
+                alertElement.classList.add('alert-hide');
+                setTimeout(function () {
+                    alertElement.remove();
+                }, 500);
+            }, 5000);
+        }
+
+        showNotification('Đăng nhập thành công!');
+    </script>
+}
+
+<!-- Banner -->
+@Html.Action("MenuProductCategory", "Menu")
+
+<!-- New Arrivals -->
+
+<div class="new_arrivals">
+    <div class="container">
+        @Html.Action("MenuArrivals", "Menu")
+    </div>
+</div>
+
+<!-- Deal of the week -->
+
+<div class="deal_ofthe_week">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="deal_ofthe_week_img">
+                    <img src="~/Content/assets/images/deal_ofthe_week.png" alt="">
+                </div>
+            </div>
+            <div class="col-lg-6 text-right deal_ofthe_week_col">
+                <div class="deal_ofthe_week_content d-flex flex-column align-items-center float-right">
+                    <div class="section_title">
+                        <h2>Deal Of The Week</h2>
+                    </div>
+                    <ul class="timer">
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="day" class="timer_num">03</div>
+                            <div class="timer_unit">Day</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="hour" class="timer_num">15</div>
+                            <div class="timer_unit">Hours</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="minute" class="timer_num">45</div>
+                            <div class="timer_unit">Mins</div>
+                        </li>
+                        <li class="d-inline-flex flex-column justify-content-center align-items-center">
+                            <div id="second" class="timer_num">23</div>
+                            <div class="timer_unit">Sec</div>
+                        </li>
+                    </ul>
+                    <div class="red_button deal_ofthe_week_button"><a href="@Url.Action("Index", "Products")">shop now</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Best Sellers -->
+@Html.Action("Partial_ProductSales", "Products")
+<!-- Benefit -->
+
+<div class="benefit">
+    <div class="container">
+        <div class="row benefit_row">
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>MIỄN PHÍ VẬN CHUYỂN</h6>
+                        <p>Miễn phí cho đơn hàng từ 50k</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-money" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>THANH TOÁN NHANH HƠN</h6>
+                        <p>Dùng nhiều phương thức thanh toán</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-undo" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>CHÍNH SÁCH ĐỔI TRẢ</h6>
+                        <p>Có thể đổi trả trong vòng 1 tuần</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 benefit_col">
+                <div class="benefit_item d-flex flex-row align-items-center">
+                    <div class="benefit_icon"><i class="fa fa-clock-o" aria-hidden="true"></i></div>
+                    <div class="benefit_content">
+                        <h6>LUÔN MỞ CỬA CUỐI TUẦN</h6>
+                        <p>Mở cửa: 8AM - 09PM</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Blogs -->
+@*@Html.Action("Partial_News_Home", "News")*@
+
+<!-- The Modal -->
+<div class="modal fade" id="myModal">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="margin-top:125px;">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">SHOP TTQ 2024</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="container container-horizontal">
+                    <div class="image-container">
+                        <img src="~/Content/templates/bannermini_img.png" alt="BST Áo Dài 2024">
+                    </div>
+                    <div class="form-container">
+                        <h2 style="
+    font-size: 31px;
+    font-family: 'FontAwesome';">
+                            ĐĂNG KÝ NHẬN TIN KHUYẾN MÃI
+                        </h2>
+                        <input type="email" id="inputEmail" placeholder="Nhập email của bạn..." class="form-control">
+                        <div class="social-icons">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                        <button id="btnRegister" class="btn1 btn-primary btn-block mt-3">ĐĂNG KÝ</button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(window).on('load', function () {
+            $('#myModal').modal('show');
+        });
+    </script>
+
+    <script>
+    $(document).ready(function () {
+        $('#btnRegister').click(function () {
+            var email = $('#inputEmail').val();
+            if (email === "") {
+                alert('Bạn chưa nhập email. Vui lòng nhập!');
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("RegisterForPromotion", "Home")',
+                    data: { email: email },
+                    success: function (response) {
+                        if (response.success) {
+                            alert('Đăng ký khuyến mãi thành công!');
+                            // Reset form
+                            $('#inputEmail').val('');
+                        } else {
+                            alert('Đăng ký thất bại: ' + response.message);
+                        }
+                    },
+                    error: function () {
+                        alert('Đăng ký thất bại. Vui lòng thử lại sau!');
+                    }
+                });
+            }
+        });
+    });
+    </script>
+
+
+
+}

@@ -1,0 +1,20 @@
+﻿@model BanHang.Models.Order
+@{
+    ViewBag.Title = "Success";
+}
+<link rel="stylesheet" type="text/css" href="~/Content/assets/styles/main_styles.css">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+<div style="margin-top:180px";></div>
+    <div class="container d-flex justify-content-center align-items-center">
+        <div class="card text-center" style="max-width: 400px;">
+            <div class="card-body">
+                <i class="fas fa-check-circle text-success fa-5x mb-3"></i>
+                <h2 class="card-title">Đặt hàng thành công</h2>
+                <p>Cảm ơn bạn đã đặt hàng. Bạn có thể xem chi tiết trong <a href="@Url.Action("MyOrders", "Order")"><span style="color: blue;">đơn hàng của tôi</span> <i class="fas fa-shopping-cart" style="color: green;"></i></a>.</p>
+                <p class="mb-0">Nếu có bất kỳ thắc mắc nào, vui lòng liên hệ với chúng tôi.</p>
+                <a href="@Url.Action("Index", "Home")" class="btn btn-primary">TIẾP TỤC MUA HÀNG</a>
+            </div>
+        </div>
+    </div>

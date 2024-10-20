@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = null;
+}
+
+@model IEnumerable<BanHang.Models.Order>
+
+<table class="table table-hover table-bordered text-center">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col" style="width: 10%">Mã Đơn Hàng</th>
+            <th scope="col" style="width: 10%">Khách Hàng</th>
+            <th scope="col" style="width: 10%">Số Điện Thoại</th>
+            <th scope="col" style="width: 10%">Địa Chỉ</th>
+            <th scope="col" style="width: 5%">Tổng Tiền</th>
+            <th scope="col" style="width: 10%">Thanh Toán</th>
+            <th scope="col" style="width: 5%">Ngày Tạo</th>
+            <th scope="col" style="width: 10%">Đơn vị vận chuyển</th>
+            <th scope="col" style="width: 10%">Email</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.OrderCode)</td>
+                <td>@Html.DisplayFor(modelItem => item.CustomerName)</td>
+                <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                <td>@Html.DisplayFor(modelItem => item.Address)</td>
+                <td>@Html.DisplayFor(modelItem => item.TotalAmount)</td>
+                <td>
+                    @if (item.StatusPayment == true)
+                    {
+                        <span class="text-success">Đã thanh toán</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Chưa thanh toán</span>
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedDate)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.Shipping)</td>
+
+                <td>@Html.DisplayFor(modelItem => item.Email)</td>
+
+            </tr>
+        }
+    </tbody>
+</table>
