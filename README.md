@@ -23,9 +23,9 @@ As a graduating student, I have chosen to develop an e-commerce website using AS
 
 ### Customer Interface
 1. Homepage
-   ![Homepage](demo/image.png)
+   ![Homepage](/demo/image.png)
 2. News Page
-   ![News Page](demo/image-1.png)
+   ![News Page](./demo/image-1.png)
 3. Product Page
    ![Product Page](demo/image-2.png)
 4. Product Details Page
