@@ -23,31 +23,31 @@ As a graduating student, I have chosen to develop an e-commerce website using AS
 
 ### Customer Interface
 1. Homepage
-   ![Homepage](/demo/image.png)
+   ![Homepage](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image.png)
 2. News Page
-   ![News Page](./demo/image-1.png)
+   ![News Page](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-1.png)
 3. Product Page
-   ![Product Page](demo/image-2.png)
+   ![Product Page](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-2.png)
 4. Product Details Page
-   ![Product Details Page](demo/image-3.png)
+   ![Product Details Page](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-3.png)
 5. Promotions Page
-   ![Promotions Page](demo/image-4.png)
+   ![Promotions Page](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-4.png)
 6. AI Chatbot Interface
-   ![AI Chatbot Interface](demo/image-5.png)
+   ![AI Chatbot Interface](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-5.png)
 7. Shopping Cart
-   ![Shopping Cart](demo/image-6.png)
+   ![Shopping Cart](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-6.png)
 8. QR Payment Interface
-   ![QR Payment Interface](demo/image-7.png)
+   ![QR Payment Interface](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-7.png)
 9. Order Confirmation Notification and Promotional Email
-   ![Order Confirmation Notification and Promotional Email](demo/image-8.png)
+   ![Order Confirmation Notification and Promotional Email](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-8.png)
 
 ### Admin Interface
 1. Admin Dashboard
-   ![Admin Dashboard](demo/image-9.png)
+   ![Admin Dashboard](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-9.png)
 2. Order Management Interface
-   ![Order Management Interface](demo/image-10.png)
+   ![Order Management Interface](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-10.png)
 3. Statistics Page
-   ![Statistics Page](demo/image-11.png)
+   ![Statistics Page](https://github.com/Thang2882002/WebBanHang/tree/master/BanHang/demo/image-11.png)
 
 ---
 
